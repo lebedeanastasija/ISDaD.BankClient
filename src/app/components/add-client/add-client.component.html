@@ -1,0 +1,435 @@
+<form class="row" class="needs-validation p-20" novalidate
+      #form="ngForm"
+      (submit)="handleSubmit()">
+
+  <div class="col-xs-5">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Фамилия</span>
+        <input #surname="ngModel" type="text" class="form-control" name="surname"
+               [pattern]="NAME_REG_EXP" maxlength="45" minlength="1"
+               [(ngModel)]="client.surname" required>
+      </div>
+      <div *ngIf="surname.errors" class="alert alert-danger no-padding">
+        <span *ngIf="!surname.errors.required">
+          Фамилия обязательно!
+        </span>
+        <span [hidden]="!surname.errors.minlength">
+          Фамилия должна быть не короче 1 символа.
+        </span>
+        <span [hidden]="!surname.errors.maxlength">
+          Фамилия должна быть не более 45 символов.
+        </span>
+        <span [hidden]="!surname.errors.pattern">
+          Фамилия должна быть валидной!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Имя</span>
+        <input #name="ngModel" type="text" class="form-control" name="name"
+               [pattern]="NAME_REG_EXP" maxlength="45" minlength="1"
+               [(ngModel)]="client.name" required/>
+      </div>
+      <div *ngIf="name.errors" class="alert alert-danger no-padding">
+        <span *ngIf="!name.errors.required">
+          Имя обязательно!
+        </span>
+        <span [hidden]="!name.errors.minlength">
+          Имя должна быть не короче 1 символа.
+        </span>
+        <span [hidden]="!name.errors.maxlength">
+          Имя должно быть не более 45 символов.
+        </span>
+        <span [hidden]="!name.errors.pattern">
+          Имя должно быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Отчество</span>
+        <input #patronymic="ngModel" type="text" class="form-control" name="patronymic"
+               [pattern]="NAME_REG_EXP" maxlength="45" minlength="1"
+               [(ngModel)]="client.patronymic" required/>
+      </div>
+      <div *ngIf="patronymic.errors" class="alert alert-danger no-padding">
+        <span *ngIf="!patronymic.errors.required">
+          Отчество обязательно!
+        </span>
+        <span [hidden]="!patronymic.errors.minlength">
+          Отчество должна быть не короче 1 символа.
+        </span>
+        <span [hidden]="!patronymic.errors.maxlength">
+          Отчество должно быть не более 45 символов.
+        </span>
+        <span [hidden]="!patronymic.errors.pattern">
+           Отчество должно быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Дата рождения</span>
+        <input #birthDate="ngModel" type="date" class="form-control" name="birthDate"
+               maxlength="12" minlength="10"
+               [(ngModel)]="client.birthDate" required/>
+      </div>
+      <div *ngIf="birthDate.errors" class="alert alert-danger no-padding">
+        <span *ngIf="!birthDate.errors.required">
+          Дата рождения обязательна!
+        </span>
+        <span [hidden]="!birthDate.errors.minlength">
+          Дата рождения должна быть не короче 10 символов.
+        </span>
+        <span [hidden]="!birthDate.errors.maxlength">
+          Дата рождения должна быть не более 45 символов.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Пол</span>
+        <select #gender="ngModel" class="form-control" name="gender"
+                #select [(ngModel)]="client.gender" required>
+          <option *ngFor="let item of genders" [value]="item.name">{{item.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="gender.errors" class="alert alert-danger no-padding">
+        <span *ngIf="!gender.errors.required">
+          Пол обязателен!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Серия паспорта</span>
+        <input #passportSeries="ngModel" class="form-control" type="text" name="passportSeries"
+               [pattern]="PASSPORT_SERIES_REG_EXP" maxlength="2" minlength="2"
+               [(ngModel)]="client.passportSeries" required/>
+      </div>
+      <div *ngIf="passportSeries.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!passportSeries.errors.required">
+          Серия паспорта обязательна!
+        </span>
+        <span [hidden]="!passportSeries.errors.minlength">
+          Серия паспорта должна быть не короче 2 символов.
+        </span>
+        <span [hidden]="!passportSeries.errors.maxlength">
+          Серия паспорта должна быть не более 2 символов.
+        </span>
+        <span [hidden]="!passportSeries.errors.pattern">
+          Серия паспорта должна быть валидной!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Номер паспорта</span>
+        <input #passportNumber="ngModel" class="form-control" type="text" name="passportNumber"
+               [pattern]="PASSPORT_NUMBER_REG_EXP" minlength="7" maxlength="7"
+               [(ngModel)]="client.passportNumber" required/>
+      </div>
+      <div *ngIf="passportNumber.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!passportNumber.errors.required">
+          Номер паспорта обязателен!
+        </span>
+        <span [hidden]="!passportNumber.errors.minlength">
+          Номер паспорта должен быть не короче 7 символов.
+        </span>
+        <span [hidden]="!passportNumber.errors.maxlength">
+          Номер паспорта должен быть не более 7 символов.
+        </span>
+        <span [hidden]="!passportNumber.errors.pattern">
+          Номер паспорта должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Орган, выдавший паспорт</span>
+        <input #issuingAuthority="ngModel" class="form-control" type="text" name="issuingAuthority"
+               [pattern]="ADDRESS_REG_EXP" minlength="1" maxlength="255"
+               [(ngModel)]="client.issuingAuthority" required/>
+      </div>
+      <div *ngIf="issuingAuthority.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!issuingAuthority.errors.required">
+          Орган, выдавший паспорт обязателен!
+        </span>
+        <span [hidden]="!issuingAuthority.errors.minlength">
+          Орган, выдавший паспорт, должен быть не короче 1 символов.
+        </span>
+        <span [hidden]="!issuingAuthority.errors.maxlength">
+          Орган, выдавший паспорт, должен быть не более 255 символов.
+        </span>
+        <span [hidden]="!issuingAuthority.errors.pattern">
+          Орган, выдавший паспорт, должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Дата выдачи</span>
+        <input #issueDate="ngModel" class="form-control" type="date" name="issueDate"
+               maxlength="12" minlength="10"
+               [(ngModel)]="client.issueDate" required/>
+      </div>
+      <div *ngIf="issueDate.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!issueDate.errors.required">
+          Дата выдачи обязательна!
+        </span>
+        <span [hidden]="!issueDate.errors.minlength">
+            Дата выдачи должна быть не короче 10 символов.
+        </span>
+        <span [hidden]="!issueDate.errors.maxlength">
+            Дата выдачи должна быть не более 12 символов.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Идентификационный номер паспорта</span>
+        <input #identificationNumber="ngModel" class="form-control" type="text" name="identificationNumber"
+               [pattern]="PASSPORT_IDENTIFICATION_NUMBER_REG_EXP" minlength="14" maxlength="14"
+               [(ngModel)]="client.identificationNumber" required/>
+      </div>
+      <div *ngIf="identificationNumber.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!identificationNumber.errors.required">
+          Идентификационный номер паспорта обязателен!
+        </span>
+        <span [hidden]="!identificationNumber.errors.minlength">
+            Идентификационный номер паспорта должен быть не короче 13 символов.
+        </span>
+        <span [hidden]="!identificationNumber.errors.maxlength">
+            Идентификационный номер паспорта должен быть не более 13 символов.
+        </span>
+        <span [hidden]="!identificationNumber.errors.pattern">
+            Идентификационный номер паспорта должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Место рождения</span>
+        <input #birthPlace="ngModel" class="form-control" type="text" name="birthPlace"
+               [pattern]="ADDRESS_REG_EXP" minlength="1" maxlength="255"
+               [(ngModel)]="client.birthPlace" required/>
+      </div>
+      <div *ngIf="birthPlace.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!birthPlace.errors.required">
+          Место рождения обязательно!
+        </span>
+        <span [hidden]="!birthPlace.errors.minlength">
+            ИМесто рождения должно быть не короче 1 символа.
+        </span>
+        <span [hidden]="!birthPlace.errors.maxlength">
+            Место рождения должно быть не более 255 символов.
+        </span>
+        <span [hidden]="!birthPlace.errors.pattern">
+            Место рождения должно быть валидным!
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xs-offset-1 col-xs-5">
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Город проживания</span>
+        <select class="form-control" name="residenceCity"
+                #residenceCity="ngModel" [(ngModel)]="client.residenceCity" required>
+          <option *ngFor="let item of cities" [value]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="residenceCity.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!residenceCity.errors.required">
+          Город проживания обязателен!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Адрес проживания</span>
+        <input #residenceAddress="ngModel" class="form-control" type="text" name="residenceAddress"
+               [pattern]="ADDRESS_REG_EXP" minlength="1" maxlength="255"
+               [(ngModel)]="client.residenceAddress" required/>
+      </div>
+      <div *ngIf="residenceAddress.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!residenceAddress.errors.required">
+          Адрес проживания обязателен!
+        </span>
+        <span [hidden]="!residenceAddress.errors.minlength">
+            Адрес проживания должен быть не короче 1 символа.
+        </span>
+        <span [hidden]="!residenceAddress.errors.maxlength">
+            Адрес проживания должен быть не более 255 символов.
+        </span>
+        <span [hidden]="!residenceAddress.errors.pattern">
+           Адрес проживания должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Семейное положение</span>
+        <select #maritalStatusId="ngModel" class="form-control" name="maritalStatusId"
+                [(ngModel)]="client.maritalStatusId" required>
+          <option *ngFor="let item of maritalStatuses" [value]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="maritalStatusId.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!maritalStatusId.errors.required">
+          Семейное положение обязательно!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Гражданство</span>
+        <select class="form-control" name="citizenship"
+                #citizenship="ngModel" [(ngModel)]="client.citizenship" required>
+          <option *ngFor="let item of citizenships" [value]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="citizenship.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!citizenship.errors.required">
+          Гражданство обязательно!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Группа инвалидности</span>
+        <select class="form-control" name="disability"
+                #disability="ngModel" [(ngModel)]="client.disability" required>
+          <option *ngFor="let item of disabilityGroups" [value]="item.id">{{item.name}}</option>
+        </select>
+      </div>
+      <div *ngIf="disability.errors" class="alert alert-dander no-padding">
+        <span *ngIf="!disability.errors.required">
+          Группа инвалидности обязательна!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Военнообязанный</span>
+        <input class="form-control" type="checkbox" name="isReservist"
+               [checked]="client.isReservist" [value]="client.isReservist"
+               (change)="client.isReservist = !client.isReservist" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Пенсионер</span>
+        <input class="form-control" type="checkbox" name="isRetired"
+               [checked]="client.isRetired" [value]="client.isRetired"
+               (change)="client.isRetired = !client.isRetired" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Домашний телефон</span>
+        <input class="form-control" type="text" name="homePhoneNumber"
+               [pattern]="PHONE_NUMBER_REG_EXP" minlength="4" maxlength="16"
+               #homePhoneNumber="ngModel" [(ngModel)]="client.homePhoneNumber"/>
+      </div>
+      <div *ngIf="homePhoneNumber.errors" class="alert alert-dander no-padding">
+        <span [hidden]="!homePhoneNumber.errors.minlength">
+            Домашний телефон должен быть не короче 4 символов.
+        </span>
+        <span [hidden]="!homePhoneNumber.errors.maxlength">
+            Домашний телефон должен быть не более 16 символов.
+        </span>
+        <span [hidden]="!homePhoneNumber.errors.pattern">
+           Домашний телефон должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Мобильный телефон</span>
+        <input class="form-control" type="text" name="mobilePhoneNumber"
+               [pattern]="PHONE_NUMBER_REG_EXP" minlength="4" maxlength="16"
+               #mobilePhoneNumber="ngModel" [(ngModel)]="client.mobilePhoneNumber"/>
+      </div>
+      <div *ngIf="mobilePhoneNumber.errors" class="alert alert-dander no-padding">
+        <span [hidden]="!mobilePhoneNumber.errors.minlength">
+            Мобильный телефон должен быть не короче 4 символов.
+        </span>
+        <span [hidden]="!mobilePhoneNumber.errors.maxlength">
+            Мобильный телефон должен быть не более 16 символов.
+        </span>
+        <span [hidden]="!mobilePhoneNumber.errors.pattern">
+           Мобильный телефон должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">E-mail</span>
+        <input class="form-control" type="text" name="email"
+               [pattern]="EMAIL_REG_EXP" minlength="5" maxlength="345"
+               #email="ngModel" [(ngModel)]="client.email"/>
+      </div>
+      <div *ngIf="email.errors" class="alert alert-dander no-padding">
+        <span [hidden]="!email.errors.minlength">
+            E-mail должен быть не короче 5 символов.
+        </span>
+        <span [hidden]="!email.errors.maxlength">
+            E-mail должен быть не более 345 символов.
+        </span>
+        <span [hidden]="!email.errors.pattern">
+           E-mail должен быть валидным!
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon">Ежемесячный доход (руб.)</span>
+        <input class="form-control" type="text" name="monthlyIncome"
+               [pattern]="FLOAT_NUMBER_REG_EXP" minlength="1"
+               #monthlyIncome="ngModel" [(ngModel)]="client.monthlyIncome"/>
+      </div>
+      <div *ngIf="monthlyIncome.errors" class="alert alert-dander no-padding">
+        <span [hidden]="!monthlyIncome.errors.minlength">
+            Ежемесячный доход должен быть не короче 1 цифры.
+        </span>
+        <span [hidden]="!monthlyIncome.errors.pattern">
+           Ежемесячный доход должен быть валидным!
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-20 col-xs-12">
+    <button class="btn btn-default" (click)="prefillClient()">Заполнить поля</button>
+    <button class="btn btn-default" (click)="logClientData()">Вывести данные в консоль</button>
+  </div>
+  <div class="p-20 col-xs-12">
+    <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Сохранить клиента</button>
+  </div>
+</form>
