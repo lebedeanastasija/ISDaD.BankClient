@@ -13,3 +13,7 @@
 .p-20 {
   padding: 20px;
 }
+
+.no-padding {
+  padding: 0 !important;
+}

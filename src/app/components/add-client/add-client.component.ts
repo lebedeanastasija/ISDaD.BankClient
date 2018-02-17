@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientsService} from '../../services/client.service';
+import {FormValidationRegexp} from '../../constants/form-validation-regexp';
 
 @Component({
   selector: 'app-add-client-component',
@@ -7,15 +8,15 @@ import {ClientsService} from '../../services/client.service';
   styleUrls: ['./add-client.component.css']
 })
 export class AddClientComponent implements OnInit {
-  NAME_REG_EXP = /^[А-Я][а-я]*(-[А-Я]+[а-я]+)*$/;
-  PASSPORT_SERIES_REG_EXP = /^[A-Z]{2}$/g;
-  PASSPORT_NUMBER_REG_EXP = /^[0-9]{7}$/g;
-  PASSPORT_IDENTIFICATION_NUMBER_REG_EXP = /([0-9]|[A-Z]){14}/g;
-  ADDRESS_REG_EXP = /([0-9]|[А-Я]|[а-я]|[,.]|-){1,255}/g;
-  DATE_REG_EXP = /[0-9]{4,6}-[0-1][0-9]-[0-3][0-9]{10,12}/g;
-  PHONE_NUMBER_REG_EXP = /\+\d{3,15}/g;
-  EMAIL_REG_EXP = /[0-9a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+/g;
-  FLOAT_NUMBER_REG_EXP = /[0-9]*\.?[0-9]*/g;
+  NAME_REG_EXP;
+  PASSPORT_SERIES_REG_EXP;
+  PASSPORT_NUMBER_REG_EXP;
+  PASSPORT_IDENTIFICATION_NUMBER_REG_EXP;
+  ADDRESS_REG_EXP;
+  DATE_REG_EXP;
+  PHONE_NUMBER_REG_EXP;
+  EMAIL_REG_EXP;
+  FLOAT_NUMBER_REG_EXP;
 
   genders: any = [
     {name: 'женский'},
@@ -37,11 +38,11 @@ export class AddClientComponent implements OnInit {
     {id: 5, name: 'разведен'}
   ];
   citizenships: any = [
-    {id: 0, name: 'Беларусь'},
-    {id: 1, name: 'Латвия'},
-    {id: 2, name: 'Литва'},
-    {id: 3, name: 'Польша'},
-    {id: 4, name: 'Россия'}
+    {id: 1, name: 'Беларусь'},
+    {id: 2, name: 'Латвия'},
+    {id: 3, name: 'Литва'},
+    {id: 4, name: 'Польша'},
+    {id: 5, name: 'Россия'}
   ];
   disabilityGroups: any = [
     {id: 0, name: '1'},
@@ -51,11 +52,25 @@ export class AddClientComponent implements OnInit {
   ];
 
   client: any = null;
+  error: String;
 
   constructor(private clientsService: ClientsService) { }
 
   ngOnInit() {
+    this.initRegexp();
     this.initClient();
+  }
+
+  initRegexp() {
+    this.NAME_REG_EXP = FormValidationRegexp.NAME_REG_EXP;
+    this.PASSPORT_SERIES_REG_EXP = FormValidationRegexp.PASSPORT_SERIES_REG_EXP;
+    this.PASSPORT_NUMBER_REG_EXP = FormValidationRegexp.PASSPORT_NUMBER_REG_EXP;
+    this.PASSPORT_IDENTIFICATION_NUMBER_REG_EXP = FormValidationRegexp.PASSPORT_IDENTIFICATION_NUMBER_REG_EXP;
+    this.ADDRESS_REG_EXP = FormValidationRegexp.ADDRESS_REG_EXP;
+    this.DATE_REG_EXP = FormValidationRegexp.DATE_REG_EXP;
+    this.PHONE_NUMBER_REG_EXP = FormValidationRegexp.PHONE_NUMBER_REG_EXP;
+    this.EMAIL_REG_EXP = FormValidationRegexp.EMAIL_REG_EXP;
+    this.FLOAT_NUMBER_REG_EXP = FormValidationRegexp.FLOAT_NUMBER_REG_EXP;
   }
 
   initClient() {
@@ -130,7 +145,7 @@ export class AddClientComponent implements OnInit {
       residenceCity:        2,
       residenceAddress:     'пр.Экономики, д.147, кв.49',
       maritalStatusId:      1,
-      citizenship:          0,
+      citizenship:          1,
       disability:           3,
       isReservist:          false,
       isRetired:            false,
@@ -142,8 +157,12 @@ export class AddClientComponent implements OnInit {
   }
 
   handleSubmit() {
+    this.error = null;
     console.log('test');
-    this.clientsService.fetchClients()
-      .then(data => console.log('clients: ', data));
+    this.clientsService.addClient(this.client)
+    .then(data => console.log('client: ', data))
+      .catch((err: any) => {
+        this.error = err.error.data.message + "\n, invalid fields:\n" + JSON.stringify(Object.keys(err.error.data.invalidFields).filter(i => err.error.data.invalidFields[i]).join(', '));
+      });
   }
 }

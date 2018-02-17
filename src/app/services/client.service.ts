@@ -7,8 +7,12 @@ import { BankAppConfig } from '../configs/bank-app.config';
 export class ClientsService {
   constructor(private http: BankHttpClient) {}
 
-  fetchClients() {
+  fetchAll() {
     return this.http.get(`${BankAppConfig.API}/clients`);
+  }
+
+  fetchById(id: number) {
+    return this.http.get(`${BankAppConfig.API}/clients/${id}`);
   }
 
   removeClient(id: number) {
@@ -16,5 +20,10 @@ export class ClientsService {
   }
 
   addClient(data) {
+    return this.http.post(`${BankAppConfig.API}/clients`, data);
+  }
+
+  updateClient(id, data) {
+    return this.http.post(`${BankAppConfig.API}/clients/${id}`, data);
   }
 }

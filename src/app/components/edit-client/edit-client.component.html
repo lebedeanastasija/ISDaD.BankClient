@@ -1,9 +1,8 @@
-<div *ngIf="error" class="alert alert-danger no-padding">
-  {{error}}
-</div>
-<form class="row" class="needs-validation p-20" novalidate
+<form *ngIf="isLoaded" class="row" class="needs-validation p-20" novalidate
       #form="ngForm">
-
+  <div *ngIf="error" class="alert alert-danger no-padding">
+    <span>{{error}}</span>
+  </div>
   <div class="col-xs-5">
 
     <div class="form-group">
@@ -428,10 +427,7 @@
   </div>
 
   <div class="p-20 col-xs-12">
-    <button class="btn btn-default" (click)="prefillClient()">Заполнить поля</button>
-    <button class="btn btn-default" (click)="logClientData()">Вывести данные в консоль</button>
-  </div>
-  <div class="p-20 col-xs-12">
-    <button class="btn btn-primary" (click)="handleSubmit()" [disabled]="!form.valid">Сохранить клиента</button>
+    <button class="btn btn-primary" (click)="updateClient()" [disabled]="!form.valid">Сохранить изменения</button>
   </div>
 </form>
+

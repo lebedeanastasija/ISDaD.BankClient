@@ -10,9 +10,13 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 
 import {ClientsService} from './services/client.service';
 import {BankHttpClient} from './utils/http';
+import { ClientListComponent } from './components/client-list/client-list.component';
+import { EditClientComponent } from './components/edit-client/edit-client.component';
 
 const appRoutes: Routes = [
-  { path: 'AddClient', component: AddClientComponent }
+  { path: 'AddClient', component: AddClientComponent },
+  { path: 'ClientList', component: ClientListComponent},
+  { path: 'EditClient/:id', component: EditClientComponent },
 ];
 
 
@@ -20,7 +24,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AddClientComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ClientListComponent,
+    EditClientComponent
   ],
   imports: [
     BrowserModule,

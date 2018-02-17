@@ -1,0 +1,17 @@
+<div class="panel-group" *ngIf="isLoaded" style="margin: 15px">
+  <div class="panel panel-info" *ngFor="let client of clients" style="margin-bottom: 10px">
+    <div class="panel-heading">
+      <a (click)="removeClient(client.id)">
+        <span class="glyphicon glyphicon-trash"
+               style="display:inline-block; margin-right: 5px">
+        </span>
+      </a>
+      <a routerLink="/EditClient/{{client.id}}">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </a>
+    </div>
+    <div class="panel-body">
+      {{client.surname}} {{client.name}} {{client.patronymic}}
+    </div>
+  </div>
+</div>
